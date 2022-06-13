@@ -1,0 +1,104 @@
+{
+  "name": "BTC-amounts",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "webpack-dev-server --port 8080 --open --mode=development",
+    "clean-build": "shx rm -rf build",
+    "build": "npm run clean-build && webpack --mode=production",
+    "build-serve": "npm run build && serve"
+  },
+  "node_engine": {
+    "node": ">=10.16.0"
+  },
+  "babel": {
+    "presets": [
+      "@babel/preset-env",
+      "@babel/preset-react"
+    ],
+    "plugins": [
+      [
+        "react-hot-loader/babel"
+      ],
+      [
+        "import",
+        {
+          "libraryName": "antd",
+          "libraryDirectory": "es",
+          "style": "css"
+        }
+      ],
+      [
+        "@babel/plugin-proposal-class-properties"
+      ]
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "src/**/*.{js,jsx}": [
+      "pretty-quick --staged",
+      "eslint",
+      "git add"
+    ]
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/core": "^7.10.4",
+    "@babel/plugin-proposal-class-properties": "^7.10.4",
+    "@babel/preset-env": "^7.10.4",
+    "@babel/preset-react": "^7.10.4",
+    "@svgr/webpack": "^5.4.0",
+    "@types/react": "^18.0.12",
+    "babel-eslint": "^10.1.0",
+    "babel-loader": "^8.1.0",
+    "babel-plugin-import": "^1.13.0",
+    "compression-webpack-plugin": "^4.0.0",
+    "copy-webpack-plugin": "^6.0.3",
+    "css-loader": "^6.7.1",
+    "eslint": "^7.4.0",
+    "eslint-config-airbnb": "^18.2.0",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-plugin-import": "^2.21.2",
+    "eslint-plugin-jsx-a11y": "^6.3.1",
+    "eslint-plugin-prettier": "^3.1.4",
+    "eslint-plugin-react": "^7.20.3",
+    "eslint-plugin-react-hooks": "^4.0.7",
+    "html-webpack-plugin": "^5.5.0",
+    "husky": "^4.2.5",
+    "less": "^4.1.2",
+    "less-loader": "^11.0.0",
+    "lint-staged": "^10.2.11",
+    "miragejs": "^0.1.45",
+    "prettier": "^2.0.5",
+    "pretty-quick": "^2.0.1",
+    "serve": "^11.3.2",
+    "shx": "^0.3.2",
+    "style-loader": "^1.2.1",
+    "ts-loader": "^9.3.0",
+    "typescript": "^4.7.3",
+    "webpack": "^5.73.0",
+    "webpack-bundle-analyzer": "^4.5.0",
+    "webpack-cli": "^4.9.2",
+    "webpack-dev-server": "^4.9.2"
+  },
+  "dependencies": {
+    "@ant-design/dark-theme": "^2.0.2",
+    "@ant-design/icons": "^4.7.0",
+    "@hot-loader/react-dom": "^17.0.2",
+    "antd": "^4.21.0",
+    "axios": "^0.27.2",
+    "beautify-json": "^1.0.1",
+    "prop-types": "^15.7.2",
+    "react": "^18.1.0",
+    "react-dom": "^18.1.0",
+    "react-hot-loader": "^4.13.0",
+    "react-router-dom": "^6.3.0",
+    "react-scripts": "^5.0.1"
+  }
+}

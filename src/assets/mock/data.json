@@ -1,0 +1,32 @@
+[
+  {
+    "id": 1,
+    "user": {
+      "id": "u1",
+      "groupId": "alpha"
+    },
+    "amount": 0.07,
+    "type": "deposit",
+    "date": "2022-05-27T12:05.27"
+  },
+  {
+    "id": 3,
+    "user": {
+      "id": "u2",
+      "groupId": "beta"
+    },
+    "amount": 0.32,
+    "type": "withdrawal",
+    "date": "2022-05-28T11:15.23"
+  },
+  {
+    "id": 4,
+    "user": {
+      "id": "u3",
+      "groupId": "alpha"
+    },
+    "amount": 0.006,
+    "type": "withdrawal",
+    "date": "2022-05-28T14:25.09"
+  }
+]

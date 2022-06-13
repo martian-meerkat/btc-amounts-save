@@ -1,0 +1,18 @@
+.ant-tabs-tab {
+  font-size: 18px;
+}
+
+.form-operation {
+  margin-top: 28px;
+  font-size: 22px;
+}
+
+.form-operation-input {
+  max-width: 350px;
+  min-width: 26px;
+  width: 30%;
+}
+
+.form-operation-btn {
+  margin-left: 24px;
+}

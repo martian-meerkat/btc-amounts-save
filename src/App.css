@@ -1,0 +1,9 @@
+@import '~antd/dist/antd.css';
+
+.ant-layout {
+  min-height: 100vh;
+}
+
+.ant-layout-footer {
+  text-align: center;
+}
