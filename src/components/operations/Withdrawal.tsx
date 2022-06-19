@@ -1,26 +1,26 @@
 import React, { useState } from 'react';
 import { InputNumber, Button } from 'antd';
 import { useAppDispatch } from '../../hooks/useApp';
-import { depositRequest } from '../../redux/operations/operationsSlice';
+import { withdrawalRequest } from '../../redux/operations/operationsSlice';
 
 const Deposit: React.FC = () => {
-    const [depositAmount, setDepositAmount] = useState<number>(0);
-    const dispatch = useAppDispatch()
+    const [withdrawalAmount, setWithdrawalAmount] = useState<number>(0);
+    const dispatch = useAppDispatch();
 
     return (
         <div className="form-operation">
             <label>
-                Deposit BTC:{' '}
+                Withdraw BTC:{' '}
                 <InputNumber
                     id="input-deposit"
                     type="number"
                     size="large"
                     className="form-operation-input"
-                    defaultValue={depositAmount}
-                    onChange={value => setDepositAmount(value)}
+                    defaultValue={withdrawalAmount}
+                    onChange={value => setWithdrawalAmount(value)}
                 />
             </label>
-            <Button type="primary" size="large" className="form-operation-btn" onClick={() => dispatch(depositRequest(depositAmount))}>
+            <Button type="primary" size="large" className="form-operation-btn" onClick={() => dispatch(withdrawalRequest(withdrawalAmount))}>
                 Transact
             </Button>
         </div>

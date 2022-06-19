@@ -1,17 +1,11 @@
+import { OperationTypes } from '../constants/operationTypes';
 import IUser from './IUser';
-
-export type OperationType = 'deposit' | 'widthdrawal';
-
-interface IUserData {
-  id: string;
-  groupId: string;
-}
 
 export interface IOperationData {
   id: number;
-  user: IUserData;
+  user: IUser;
   amount: number;
-  type: OperationType;
+  type: OperationTypes;
   date: Date;
 }
 

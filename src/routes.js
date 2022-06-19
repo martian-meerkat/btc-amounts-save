@@ -2,14 +2,13 @@ import React, { Suspense, lazy, useState } from 'react';
 import MainLayout from './layout/MainLayout';
 import Login from './components/login/Login';
 import useToken from './hooks/useToken';
-import { UserContext } from './context/user-context';
 
 const Operations = lazy(() => import('./components/operations/Operations'));
-const About = lazy(() => import('./Components/about/About'));
+const Statistics = lazy(() => import('./components/statistics/Statistics'));
 
 const components = {
   menu_item_operations: <Operations />,
-  menu_item_statistics: <About />,
+  menu_item_statistics: <Statistics />
 };
 
 const AppRouter = () => {

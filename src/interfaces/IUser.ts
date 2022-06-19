@@ -1,4 +1,4 @@
-export default interface User {
-  getUserId(): string;
-  getUserGroupId(): string;
+export default interface IUser {
+  id: string;
+  groupId: string;
 }

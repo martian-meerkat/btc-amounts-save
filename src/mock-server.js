@@ -22,7 +22,11 @@ export default function () {
         const body = JSON.parse(request.requestBody);
         const user = schema.users.find(body.username);
         if (user) {
-          return { token: 'test_token' };
+          return {
+            id: user.id,
+            groupId: user.groupId,
+            token: 'test_token' 
+          };
         } else {
           return new Response(
             401,

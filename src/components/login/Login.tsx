@@ -3,13 +3,20 @@ import { Button, Form, Input, message } from 'antd';
 import { login } from '../../services/login.service';
 import { ILoginProps } from '../../interfaces/ILogin';
 
+import { useAppDispatch } from '../../hooks/useApp';
+import { setuser } from '../../redux/user/userSlice';
+
 import './Login.css';
+import { fetchOperationsIfNeeded } from '../../redux/operations/operationsSlice';
 
 const Login: FunctionComponent<ILoginProps> = ({ setToken }: ILoginProps) => {
+  const dispatch = useAppDispatch();
   const onFinish = async (values: { username: string; password: string }) => {
     try {
       const response = await login(values.username, values.password);
       setToken(response.data.token);
+      dispatch(setuser({userData: {id: response.data.id, groupId: response.data.groupId}, token: response.data.token}));
+      dispatch(fetchOperationsIfNeeded());
     } catch (error) {
       message.error(`Authentication failed: ${error.response.data.message}`);
     }
