@@ -42,6 +42,9 @@ export default function () {
         let body = JSON.parse(request.requestBody);
         return schema.operations.create(body);
       });
+      this.get('/users', (schema) => {
+        return schema.users.all();
+      })
     },
   });
 }

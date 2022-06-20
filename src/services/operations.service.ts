@@ -16,3 +16,7 @@ export const btcWithdrawal = (amount: number, getState: () => RootState): Promis
     const body = new Operation(OperationTypes.WITHDRAWAL, amount, getState).getPayloadData();
     return http.post('/btc-operations', body);
 };
+
+export const getUsers = (): Promise<any> => {
+    return http.get('/users');
+};

@@ -1,26 +1,25 @@
-import React from 'react';
-import { Line } from '@ant-design/charts';
+import React, { useState } from 'react';
+import { Line } from '@ant-design/plots';
+import { useAppDispatch, useAppSelector } from '../../hooks/useApp';
+import { selectOperationsByGroup } from '../../redux/operations/operationsSlice';
+import { DatePicker } from 'antd';
+import { Moment } from 'moment';
+import { setDateRange } from '../../redux/statistics/statisticsSlice';
+
+const { RangePicker } = DatePicker;
 
 const Statistics: React.FC = () => {
-    const data = [
-        { year: '1991', value: 3 },
-        { year: '1992', value: 4 },
-        { year: '1993', value: 3.5 },
-        { year: '1994', value: 5 },
-        { year: '1995', value: 4.9 },
-        { year: '1996', value: 6 },
-        { year: '1997', value: 7 },
-        { year: '1998', value: 9 },
-        { year: '1999', value: 13 },
-    ];
+    const dispatch = useAppDispatch()
+    const data = useAppSelector(selectOperationsByGroup);
     
     const config = {
         data,
         width: 800,
         height: 400,
         autoFit: false,
-        xField: 'year',
-        yField: 'value',
+        xField: 'date',
+        yField: 'amount',
+        seriesField: 'groupId',
         point: {
             size: 5,
             shape: 'diamond',
@@ -32,9 +31,14 @@ const Statistics: React.FC = () => {
         },
     };
 
+    const onDateRangeChange = (dates: [Moment, Moment]) => {
+        dispatch(setDateRange([dates[0].toDate().toDateString(), dates[1].toDate().toDateString()]));
+    }
+
     return (
         <div>
             <Line {...config} />
+            <RangePicker size='large' onChange={onDateRangeChange} />
         </div>
     );
 };

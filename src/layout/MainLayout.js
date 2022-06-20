@@ -27,8 +27,6 @@ export default class MainLayout extends React.Component {
 
   render() {
     const { children, handleMenuClick } = this.props;
-    console.log('handleMenuClick');
-    console.log(handleMenuClick);
     return (
       <Layout>
         <Sider>
