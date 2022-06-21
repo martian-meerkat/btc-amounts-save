@@ -23,8 +23,7 @@ const Statistics: React.FC<StatisticsProps> = ({loadingData, hasData}: Statistic
     
     const config = {
         data,
-        autoFit: false,
-        height: 600,
+        autoFit: true,
         xField: 'date',
         yField: 'amount',
         seriesField: 'groupId',
