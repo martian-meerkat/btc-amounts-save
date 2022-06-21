@@ -5,15 +5,16 @@ import './PageLayout.less';
 
 type PageLayoutProps = {
     title: string,
-    children: JSX.Element
+    children: JSX.Element,
+    extra?: JSX.Element[]
 }
 
 const { Content } = Layout;
 
-const PageLayout: React.FC<PageLayoutProps> = ({ title, children }: PageLayoutProps) => {
+const PageLayout: React.FC<PageLayoutProps> = ({ title, children, extra }: PageLayoutProps) => {
   return (
     <>
-      <PageHeader title={title} />
+      <PageHeader title={title} extra={extra}/>
       <Content className="page-content">{children}</Content>
     </>
   );

@@ -1,23 +1,30 @@
 import React, { useEffect, useState } from 'react';
 import { Line } from '@ant-design/plots';
 import { useAppDispatch, useAppSelector } from '../../hooks/useApp';
-import { selectOperationsByDateAndGroup } from '../../redux/operations/operationsSlice';
+import { fetchOperationsIfNeeded, selectOperationsByDateAndGroup } from '../../redux/operations/operationsSlice';
 import { DatePicker } from 'antd';
 import { Moment } from 'moment';
 import { setDateRange } from '../../redux/statistics/statisticsSlice';
+import { connect } from 'react-redux';
+import { RootState } from '../../redux/store';
+import PageLayout from '../../layout/PageLayout';
 
 const { RangePicker } = DatePicker;
 
-const Statistics: React.FC = () => {
+type StatisticsProps = {
+    loadingData: boolean;
+    hasData: boolean
+}
+
+const Statistics: React.FC<StatisticsProps> = ({loadingData, hasData}: StatisticsProps) => {
     const dispatch = useAppDispatch();
     const selectData = useAppSelector(selectOperationsByDateAndGroup);
     const [data, setData] = useState(selectData);
     
     const config = {
         data,
-        width: 800,
-        height: 400,
         autoFit: false,
+        height: 600,
         xField: 'date',
         yField: 'amount',
         seriesField: 'groupId',
@@ -33,19 +40,38 @@ const Statistics: React.FC = () => {
     };
 
     useEffect(() => {
-        setData(selectData)
-    })
+        setData(selectData);
+    });
 
     const onDateRangeChange = (dates: [Moment, Moment]) => {
         dispatch(setDateRange([dates[0].toDate().toDateString(), dates[1].toDate().toDateString()]));
-    }
+    };
+
+    if (!data && hasData) {
+        setData(selectData)
+    };
 
     return (
-        <div>
-            <Line {...config} />
-            <RangePicker size='large' onChange={onDateRangeChange} />
+        loadingData ?
+        <div className="lazy-loading">
+            <span>Loading...</span>
         </div>
+        :
+        <PageLayout title='Statistics by groups in time' extra={[<RangePicker key='statistics_date_range' size='large' onChange={onDateRangeChange} />]}>
+            <div>
+                <div>
+                    <Line {...config} />
+                </div>
+            </div>
+        </PageLayout>
     );
 };
 
-export default Statistics;
+const mapStateToProps = (state: RootState) => {
+    return {
+        loadingData: state.statistics.loadingData,
+        hasData: state.statistics.hasData
+    }
+}
+
+export default connect(mapStateToProps)(Statistics);

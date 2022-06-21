@@ -9,8 +9,6 @@ export const getAllOperations = (): Promise<any> => {
 
 export const btcDeposit = (amount: number, getState: () => RootState): Promise<any> => {
     const body = new Operation(OperationTypes.DEPOSIT, amount, getState).getPayloadData();
-    console.log('request body');
-    console.log(body);
     return http.post('/btc-operations', body);
 };
 

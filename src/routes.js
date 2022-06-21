@@ -7,12 +7,12 @@ const Operations = lazy(() => import('./components/operations/Operations'));
 const Statistics = lazy(() => import('./components/statistics/Statistics'));
 
 const components = {
-  menu_item_operations: <Operations />,
-  menu_item_statistics: <Statistics />
+  menu_item_statistics: <Statistics />,
+  menu_item_operations: <Operations />
 };
 
 const AppRouter = () => {
-  const [render, updateRender] = useState('menu_item_operations');
+  const [render, updateRender] = useState('menu_item_statistics');
   const { token, setToken } = useToken();
 
   if (!token) {

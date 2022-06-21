@@ -3,6 +3,7 @@ import { IOperationData } from '../../interfaces/IOperation'
 import { RootState } from '../store'
 import { btcDeposit, btcWithdrawal, getAllOperations } from '../../services/operations.service'
 import { OperationTypes } from '../../constants/operationTypes';
+import { loadingData, dataLoaded } from '../statistics/statisticsSlice';
 
 export type OperationsState = {
     data: IOperationData[]
@@ -15,13 +16,13 @@ export const operationsSlice = createSlice({
     initialState: initialState,
     reducers: {
         fetchOperations: (_state, action: PayloadAction<IOperationData[]>) => {
-            return {data: action.payload};
+            return {loadingData: false, data: action.payload};
         },
         deposit: (state, action: PayloadAction<IOperationData>) => {
-            return {data: [...state.data, action.payload]};
+            return {...state, data: [...state.data, action.payload]};
         },
         withdrawal: (state, action: PayloadAction<IOperationData>) => {
-            return {data: [...state.data, action.payload]};
+            return {...state, data: [...state.data, action.payload]};
         }
     }
 })
@@ -29,8 +30,10 @@ export const operationsSlice = createSlice({
 const { fetchOperations, deposit, withdrawal } = operationsSlice.actions
 
 export const fetchOperationsIfNeeded = (): ThunkAction<void, RootState, unknown, AnyAction> => async (dispatch) => {
+    dispatch(loadingData());
     const response = await getAllOperations();
     dispatch(fetchOperations(response.data.operations));
+    dispatch(dataLoaded());
 }
 
 export const depositRequest = (amount: number): ThunkAction<void, RootState, unknown, AnyAction> => async (dispatch, getState) => {
@@ -44,6 +47,9 @@ export const withdrawalRequest = (amount: number): ThunkAction<void, RootState, 
 }
 
 const selectAllGroupIds = (state: RootState) => {
+    if (!state.operations.data) {
+        return null;
+    }
     const groupIds = new Set<string>;
     state.operations.data.forEach((operation) => {
         groupIds.add(operation.user.groupId)
@@ -60,9 +66,9 @@ export const selectOperationsByDateAndGroup = createSelector(
         } 
     },
     ({data, fromDate, toDate, groupIds}) => {
-        console.log('the selector');
-        console.log(fromDate);
-        console.log(toDate);
+        if (!data) {
+            return null;
+        }
         let amountsByDateAndGroup: {date: string, amount: number, groupId: string}[] = [];
         groupIds.forEach((group) => {
             const operationsByGroup = data.filter((operation: IOperationData) => operation.user.groupId === group); 
