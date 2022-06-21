@@ -6,7 +6,6 @@ import { ILoginProps } from '../../interfaces/ILogin';
 import { useAppDispatch } from '../../hooks/useApp';
 import { setuser } from '../../redux/user/userSlice';
 import { fetchOperationsIfNeeded } from '../../redux/operations/operationsSlice';
-import { groupIdsRequest } from '../../redux/statistics/statisticsSlice';
 
 import './Login.css';
 
@@ -18,7 +17,6 @@ const Login: FunctionComponent<ILoginProps> = ({ setToken }: ILoginProps) => {
       setToken(response.data.token);
       dispatch(setuser({userData: {id: response.data.id, groupId: response.data.groupId}, token: response.data.token}));
       dispatch(fetchOperationsIfNeeded());
-      dispatch(groupIdsRequest());
     } catch (error) {
       message.error(`Authentication failed: ${error.response.data.message}`);
     }

@@ -5,36 +5,30 @@ import { btcDeposit, btcWithdrawal, getAllOperations } from '../../services/oper
 import { OperationTypes } from '../../constants/operationTypes';
 
 export type OperationsState = {
-    loading: boolean,
     data: IOperationData[]
 };
 
-const initialState: OperationsState = {loading: false, data: []};
+const initialState: OperationsState = {data: null};
 
 export const operationsSlice = createSlice({
     name: 'operations',
     initialState: initialState,
     reducers: {
-        loading: (state) => {
-            return {...state, loading: true}
-        },
         fetchOperations: (_state, action: PayloadAction<IOperationData[]>) => {
-            console.log(action.payload);
-            return {loading: false, data: action.payload};
+            return {data: action.payload};
         },
         deposit: (state, action: PayloadAction<IOperationData>) => {
-            return {loading: false, data: [...state.data, action.payload]};
+            return {data: [...state.data, action.payload]};
         },
         withdrawal: (state, action: PayloadAction<IOperationData>) => {
-            return {loading: false, data: [...state.data, action.payload]};
+            return {data: [...state.data, action.payload]};
         }
     }
 })
 
-const { loading, fetchOperations, deposit, withdrawal } = operationsSlice.actions
+const { fetchOperations, deposit, withdrawal } = operationsSlice.actions
 
 export const fetchOperationsIfNeeded = (): ThunkAction<void, RootState, unknown, AnyAction> => async (dispatch) => {
-    dispatch(loading);
     const response = await getAllOperations();
     dispatch(fetchOperations(response.data.operations));
 }
@@ -49,19 +43,28 @@ export const withdrawalRequest = (amount: number): ThunkAction<void, RootState, 
     dispatch(withdrawal(response.data.operation));
 }
 
-export const selectAllOperations = (state: RootState) => state.operations.data
-export const selectOperationsByGroup = createSelector(
+const selectAllGroupIds = (state: RootState) => {
+    const groupIds = new Set<string>;
+    state.operations.data.forEach((operation) => {
+        groupIds.add(operation.user.groupId)
+    })
+    return groupIds;
+}
+export const selectOperationsByDateAndGroup = createSelector(
     (state: RootState) => {
         return {
             data: state.operations.data,
             fromDate: state.statistics.fromDate,
             toDate: state.statistics.toDate,
-            groupIds: state.statistics.userGroupIds
+            groupIds: selectAllGroupIds(state)
         } 
     },
     ({data, fromDate, toDate, groupIds}) => {
+        console.log('the selector');
+        console.log(fromDate);
+        console.log(toDate);
         let amountsByDateAndGroup: {date: string, amount: number, groupId: string}[] = [];
-        for (const group of groupIds) {
+        groupIds.forEach((group) => {
             const operationsByGroup = data.filter((operation: IOperationData) => operation.user.groupId === group); 
             const amountChangesByDate: {date: Date, change: number}[] = []
             const dateRange = [new Date(fromDate), new Date(toDate)];
@@ -97,9 +100,7 @@ export const selectOperationsByGroup = createSelector(
                 }
             })
             amountsByDateAndGroup.push(...amountsByDate);
-        }
-        console.log('amounts by date and group');
-        console.log(amountsByDateAndGroup);
+        })
         return amountsByDateAndGroup;
     }
 )

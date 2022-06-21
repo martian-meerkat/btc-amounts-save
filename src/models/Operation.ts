@@ -1,6 +1,5 @@
 import IOperation, { IOperationData } from '../interfaces/IOperation';
 import IUser from '../interfaces/IUser';
-//import store from '../redux/store';
 import { UserState } from '../redux/user/userSlice';
 import { OperationsState } from '../redux/operations/operationsSlice';
 import { OperationTypes } from '../constants/operationTypes';

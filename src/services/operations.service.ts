@@ -9,14 +9,12 @@ export const getAllOperations = (): Promise<any> => {
 
 export const btcDeposit = (amount: number, getState: () => RootState): Promise<any> => {
     const body = new Operation(OperationTypes.DEPOSIT, amount, getState).getPayloadData();
+    console.log('request body');
+    console.log(body);
     return http.post('/btc-operations', body);
 };
 
 export const btcWithdrawal = (amount: number, getState: () => RootState): Promise<any> => {
     const body = new Operation(OperationTypes.WITHDRAWAL, amount, getState).getPayloadData();
     return http.post('/btc-operations', body);
-};
-
-export const getUsers = (): Promise<any> => {
-    return http.get('/users');
 };

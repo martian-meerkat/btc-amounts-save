@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Line } from '@ant-design/plots';
 import { useAppDispatch, useAppSelector } from '../../hooks/useApp';
-import { selectOperationsByGroup } from '../../redux/operations/operationsSlice';
+import { selectOperationsByDateAndGroup } from '../../redux/operations/operationsSlice';
 import { DatePicker } from 'antd';
 import { Moment } from 'moment';
 import { setDateRange } from '../../redux/statistics/statisticsSlice';
@@ -9,8 +9,9 @@ import { setDateRange } from '../../redux/statistics/statisticsSlice';
 const { RangePicker } = DatePicker;
 
 const Statistics: React.FC = () => {
-    const dispatch = useAppDispatch()
-    const data = useAppSelector(selectOperationsByGroup);
+    const dispatch = useAppDispatch();
+    const selectData = useAppSelector(selectOperationsByDateAndGroup);
+    const [data, setData] = useState(selectData);
     
     const config = {
         data,
@@ -30,6 +31,10 @@ const Statistics: React.FC = () => {
             },
         },
     };
+
+    useEffect(() => {
+        setData(selectData)
+    })
 
     const onDateRangeChange = (dates: [Moment, Moment]) => {
         dispatch(setDateRange([dates[0].toDate().toDateString(), dates[1].toDate().toDateString()]));

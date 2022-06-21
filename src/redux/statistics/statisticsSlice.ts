@@ -1,7 +1,4 @@
-import { AnyAction, createSlice, ThunkAction } from "@reduxjs/toolkit";
-import { getUsers } from "../../services/operations.service";
-import IUser from "../../interfaces/IUser";
-import { RootState } from "../store";
+import { createSlice } from "@reduxjs/toolkit";
 
 export type StatisticsState = {
     fromDate: string,
@@ -19,23 +16,10 @@ export const statisticsSlice = createSlice({
     reducers: {
         setDateRange: (state, action) => {
             return {...state, fromDate: action.payload[0], toDate: action.payload[1]}
-        },
-        setGroupIds: (state, action) => {
-            return {...state, userGroupIds: action.payload}
         }
     }
 })
 
-export const { setDateRange, setGroupIds } = statisticsSlice.actions;
-
-export const groupIdsRequest = (): ThunkAction<void, RootState, unknown, AnyAction> => async (dispatch) => {
-    const response = await getUsers();
-    let userGroupIds: string[] = [];
-    response.data.users.forEach((user: IUser) => {
-        if (!userGroupIds.includes(user.groupId))
-            userGroupIds.push(user.groupId);
-    });
-    dispatch(setGroupIds(userGroupIds));
-}
+export const { setDateRange } = statisticsSlice.actions;
 
 export default statisticsSlice.reducer
