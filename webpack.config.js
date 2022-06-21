@@ -69,7 +69,7 @@ let config = {
   plugins: [
     new HtmlWebPackPlugin({
       template: './index.html',
-      favicon: './favicon.png',
+      favicon: './favicon.ico',
     }),
   ],
 };

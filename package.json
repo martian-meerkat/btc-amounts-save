@@ -10,7 +10,7 @@
     "build-serve": "npm run build && serve"
   },
   "node_engine": {
-    "node": ">=10.16.0"
+    "node": ">=16.4.0"
   },
   "babel": {
     "presets": [
