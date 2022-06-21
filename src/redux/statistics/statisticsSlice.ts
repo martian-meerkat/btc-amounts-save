@@ -15,9 +15,11 @@ export const statisticsSlice = createSlice({
     name: 'statistics',
     initialState: initialState,
     reducers: {
+        // status for fetching operations data
         loadingData: (state) => {
             return {...state, loadingData: true, hasData: false}
         },
+        // data fetching is finished
         dataLoaded: (state) => {
             return {...state, loadingData: false, hasData: true}
         },

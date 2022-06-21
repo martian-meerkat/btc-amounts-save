@@ -5,6 +5,8 @@ import { OperationsState } from '../redux/operations/operationsSlice';
 import { OperationTypes } from '../constants/operationTypes';
 import { RootState } from '../redux/store';
 
+// The class for REST API deposit/withdrawal request contruction
+// Create an instance, then get all payload data by getPayloadData() call.
 class Operation implements IOperation {
   private _store: {operations: OperationsState, user: UserState};
   private _id: number;

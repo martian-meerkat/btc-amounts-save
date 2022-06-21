@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Line } from '@ant-design/plots';
 import { useAppDispatch, useAppSelector } from '../../hooks/useApp';
-import { fetchOperationsIfNeeded, selectOperationsByDateAndGroup } from '../../redux/operations/operationsSlice';
+import { selectOperationsByDateAndGroup } from '../../redux/operations/operationsSlice';
 import { DatePicker } from 'antd';
 import { Moment } from 'moment';
 import { setDateRange } from '../../redux/statistics/statisticsSlice';
@@ -12,8 +12,8 @@ import PageLayout from '../../layout/PageLayout';
 const { RangePicker } = DatePicker;
 
 type StatisticsProps = {
-    loadingData: boolean;
-    hasData: boolean
+    loadingData: boolean; // is data fetching from REST?
+    hasData: boolean // has chart got statistics data?
 }
 
 const Statistics: React.FC<StatisticsProps> = ({loadingData, hasData}: StatisticsProps) => {
@@ -47,6 +47,7 @@ const Statistics: React.FC<StatisticsProps> = ({loadingData, hasData}: Statistic
         dispatch(setDateRange([dates[0].toDate().toDateString(), dates[1].toDate().toDateString()]));
     };
 
+    // should set chart's data if data is in store, but chart still has not got it
     if (!data && hasData) {
         setData(selectData)
     };

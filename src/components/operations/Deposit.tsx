@@ -1,4 +1,4 @@
-import React, { useState, KeyboardEvent } from 'react';
+import React, { useState } from 'react';
 import { InputNumber, Button } from 'antd';
 import { useAppDispatch } from '../../hooks/useApp';
 import { depositRequest } from '../../redux/operations/operationsSlice';
@@ -7,6 +7,7 @@ const Deposit: React.FC = () => {
     const [depositAmount, setDepositAmount] = useState<number>(null);
     const dispatch = useAppDispatch()
 
+    // transaction amount can't be negative
     const onInputChange = (value: number) => {
         if (!value || value <= 0) {
             setDepositAmount(0);

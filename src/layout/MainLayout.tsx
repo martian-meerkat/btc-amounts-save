@@ -20,13 +20,12 @@ const menuItems = [
   }
 ];
 
-export default class MainLayout extends React.Component {
-  constructor(props) {
-    super(props);
-  }
+type MainLayoutProps = {
+    children: JSX.Element,
+    handleMenuClick: () => void
+}
 
-  render() {
-    const { children, handleMenuClick } = this.props;
+const MainLayout: React.FC<MainLayoutProps> = ({ children, handleMenuClick }: MainLayoutProps) => {
     return (
       <Layout>
         <Sider>
@@ -48,5 +47,6 @@ export default class MainLayout extends React.Component {
         </Layout>
       </Layout>
     );
-  }
 }
+
+export default MainLayout;

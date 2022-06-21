@@ -7,6 +7,7 @@ const Deposit: React.FC = () => {
     const [withdrawalAmount, setWithdrawalAmount] = useState<number>(0);
     const dispatch = useAppDispatch();
 
+    // transaction amount can't be negative
     const onInputChange = (value: number) => {
         if (!value || value <= 0) {
             setWithdrawalAmount(0);

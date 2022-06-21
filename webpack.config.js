@@ -84,7 +84,7 @@ module.exports = (env, argv) => {
       compress: true,
       hot: true,
       static: './build',
-      historyApiFallback: true, //For react router
+      historyApiFallback: true
     };
   }
 
@@ -105,7 +105,6 @@ module.exports = (env, argv) => {
             name: 'vendors',
             chunks: 'all',
           },
-          // This can be your own design library.
           antd: {
             test: /node_modules\/(antd\/).*/,
             name: 'antd',

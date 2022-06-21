@@ -13,6 +13,7 @@ export const userSlice = createSlice({
     name: 'user',
     initialState,
     reducers: {
+        // set current user info in store
         setuser: (_state, action: PayloadAction<UserState>) => {
             return action.payload;
         }
